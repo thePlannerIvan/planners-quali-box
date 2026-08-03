@@ -1,0 +1,5 @@
+numpy>=1.26,<3
+sentence-transformers>=3,<6
+bertopic>=0.16,<1
+hdbscan>=0.8.40,<1
+scikit-learn>=1.4,<2

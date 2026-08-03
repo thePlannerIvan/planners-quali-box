@@ -1,0 +1,10 @@
+<style>
+  :root{--accent:#173b5c;--paper:#edf1f2;--panel:#fff}.gwtb-board{display:grid;grid-template-columns:1fr 1fr;border:3px solid #122638}.gwtb-cell{min-height:260px;padding:26px;border:1px solid #122638}.gwtb-cell:nth-child(1){background:#d9e8f3}.gwtb-cell:nth-child(2){background:#f3dddc}.gwtb-cell:nth-child(3){background:#e2eadc}.gwtb-cell:nth-child(4){background:#f1e8c7}.gwtb-key{font:900 clamp(52px,8vw,104px)/.8 ui-monospace,monospace;letter-spacing:-.09em;opacity:.22}.gwtb-cell h3{font-size:clamp(20px,3vw,34px)}.evidence-rail{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}@media(max-width:650px){.gwtb-board{grid-template-columns:1fr}}
+</style>
+<section class="section" id="gwtb-board" data-nav-title="GWTB 策略板"><p class="eyebrow">ONE BRAND · ONE STRATEGY</p><h2>{{GWTB_HEADLINE}}</h2><div class="gwtb-board">
+<article class="gwtb-cell"><div class="gwtb-key">GET</div><h3>{{GET}}</h3><p>{{GET_REASON}}</p><div class="evidence-rail">{{GET_SOURCES}}</div></article>
+<article class="gwtb-cell"><div class="gwtb-key">WHO</div><h3>{{WHO}}</h3><p>{{WHO_REASON}}</p><div class="evidence-rail">{{WHO_SOURCES}}</div></article>
+<article class="gwtb-cell"><div class="gwtb-key">TO</div><h3>{{TO}}</h3><p>{{TO_REASON}}</p><div class="evidence-rail">{{TO_SOURCES}}</div></article>
+<article class="gwtb-cell"><div class="gwtb-key">BY</div><h3>{{BY}}</h3><p>{{BY_REASON}}</p><div class="evidence-rail">{{BY_SOURCES}}</div></article></div></section>
+<section class="section" id="gwtb-roles" data-nav-title="证据角色"><p class="eyebrow">SOURCE ROLES</p><h2>官方性只校准证据，不拆成两套 GWTB</h2>{{OFFICIALITY_REVIEW}}</section>
+<section class="section" id="gwtb-evidence" data-nav-title="一致性与反证"><p class="eyebrow">FINDINGS UNDER REVIEW</p><h2>一致性与反证</h2>{{FINDING_CARDS}}</section>

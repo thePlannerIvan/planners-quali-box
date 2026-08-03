@@ -1,0 +1,18 @@
+{
+  "skill": "planners-quali-box",
+  "executor_context": ["complete_skill_directory", "case_prompt", "case_datasets", "empty_output_dir"],
+  "hidden_from_executor": ["evals.json", "rubric.md", "historical_output", "diagnostic_notes"],
+  "cases": [
+    {"id":"00-routing","prompt":"prompts/00-test-routing.md","files":["datasets/synthetic_routing_comments.csv"]},
+    {"id":"01-ogilvy","prompt":"prompts/01-test-ogilvy.md","files":["datasets/synthetic_campaign_comments.csv"]},
+    {"id":"02-needscope","prompt":"prompts/02-test-needscope.md","files":["datasets/synthetic_needscope_comments.csv"]},
+    {"id":"03-gwtb","prompt":"prompts/03-test-gwtb.md","files":["datasets/synthetic_gwtb_aster_official.csv","datasets/synthetic_gwtb_northpath_official.csv","datasets/synthetic_gwtb_kairo_mixed.csv"]},
+    {"id":"04-tbwa","prompt":"prompts/04-test-tbwa.md","files":["datasets/synthetic_bistro_comments.csv"]},
+    {"id":"05-levi-strauss","prompt":"prompts/05-test-levistrauss.md","files":["datasets/synthetic_bistro_comments.csv"]}
+  ],
+  "judge": {
+    "rubric": "rubric.md",
+    "required_artifacts": ["report.md", "report.html", "run-notes.md"],
+    "pass": "no_hard_failure && total_score >= 27 && method_correctness >= 4 && evidence_ownership >= 4 && traceability >= 4"
+  }
+}

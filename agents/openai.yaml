@@ -1,0 +1,4 @@
+interface:
+  display_name: "Planners Quali Box"
+  short_description: "五种定性方法、结论优先报告、MD 与 HTML 双交付"
+  default_prompt: "Use $planners-quali-box to analyze my social data and deliver a source-detailed Markdown report plus a conclusion-first, navigable HTML report."
