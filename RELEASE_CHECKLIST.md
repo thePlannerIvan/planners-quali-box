@@ -15,12 +15,12 @@ Canonical repository target: `https://github.com/thePlannerIvan/planners-quali-b
 
 ## Before the first GitHub release
 
-- [ ] Create the public repository `thePlannerIvan/planners-quali-box`.
-- [ ] Push this directory as the repository root; do not include its internal/private sibling directories.
-- [ ] Confirm that README installation commands resolve after the repository becomes public.
+- [x] Create the public repository `thePlannerIvan/planners-quali-box`.
+- [x] Push this directory as the repository root; do not include its internal/private sibling directories.
+- [x] Confirm that README installation commands resolve after the repository becomes public.
 - [ ] Enable GitHub secret scanning and dependency alerts.
 - [ ] Review the repository in a logged-out browser session.
-- [ ] Create tag `v0.1.0` and attach the release notes from `CHANGELOG.md`.
+- [x] Create tag `v0.1.0` and attach the release notes from `CHANGELOG.md`.
 - [ ] Run the six eval prompts with the intended external model and publish only privacy-safe results.
 
 Do not replace the synthetic eval files with real platform exports or customer data in the public repository.
