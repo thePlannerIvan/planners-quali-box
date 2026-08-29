@@ -7,8 +7,11 @@ deliverable/
 dist/
 build/
 
-# Real social-media data and user identifiers: do not publish
-evals/datasets/
+# Real social-media data and user identifiers: do not publish.
+# The explicitly named synthetic fixtures below are safe to distribute.
+evals/datasets/*
+!evals/datasets/README.md
+!evals/datasets/synthetic_*.csv
 
 # Secrets and local configuration
 .env
