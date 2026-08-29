@@ -1,0 +1,13 @@
+{
+  "datasets": [{
+    "dataset_id": "consumer-comments",
+    "path": "corpus-sample.csv",
+    "format": "csv",
+    "text_fields": ["content"],
+    "locator_fields": ["commentId"],
+    "actor_field": "nickname",
+    "identity_status": "unknown",
+    "evidence_role": "consumer_spontaneous",
+    "context_fields": ["noteTitle"]
+  }]
+}

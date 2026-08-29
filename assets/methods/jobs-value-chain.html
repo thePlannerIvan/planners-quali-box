@@ -1,0 +1,8 @@
+<style>
+  :root{--accent:#28564f;--paper:#edf0e8;--panel:#fff}.job-map{display:grid;grid-template-columns:.8fr 1.2fr;gap:18px}.job-context{padding:24px;border:1px solid #7c948c;background:#dce7df}.job-core{padding:24px;background:#24483f;color:#fff}.acv-list{display:grid;gap:18px;margin-top:22px}.acv-chain{display:grid;grid-template-columns:1fr 44px 1fr 44px 1fr;align-items:stretch}.acv-node{padding:20px;border:1px solid #85968f;background:#fff}.acv-node b{display:block;margin-bottom:8px;color:#28564f}.acv-arrow{display:grid;place-items:center;font-size:26px;color:#28564f}@media(max-width:760px){.job-map,.acv-chain{grid-template-columns:1fr}.acv-arrow{transform:rotate(90deg);min-height:38px}}
+</style>
+<section class="section" id="job-map" data-nav-title="情境与任务"><p class="eyebrow">CONTEXT → PROGRESS</p><h2>{{JOB_HEADLINE}}</h2><div class="job-map"><article class="job-context"><p class="eyebrow">CONTEXT / TRIGGER</p><h3>{{CONTEXT_TRIGGER}}</h3><p>{{CONTEXT_EVIDENCE}}</p></article><article class="job-core"><p class="eyebrow">CORE JOB</p><h3>{{CORE_JOB}}</h3><p>{{JOB_OUTCOME}}</p></article></div></section>
+<section class="section" id="acv-chains" data-nav-title="价值链"><p class="eyebrow">ATTRIBUTE → CONSEQUENCE → VALUE</p><h2>有原文连接的价值链</h2><div class="acv-list">{{ACV_CHAINS}}</div></section>
+<section class="section" id="job-barriers" data-nav-title="阻碍与替代"><p class="eyebrow">BARRIERS / ALTERNATIVES</p><h2>任务在哪里中断</h2>{{BARRIERS_AND_ALTERNATIVES}}</section>
+<section class="section" id="job-evidence" data-nav-title="证据与假设"><p class="eyebrow">FINDINGS UNDER REVIEW</p><h2>证据、反证与待验证链</h2>{{FINDING_CARDS}}</section>
+

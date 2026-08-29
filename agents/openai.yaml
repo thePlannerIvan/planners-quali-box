@@ -1,0 +1,4 @@
+interface:
+  display_name: "Planners Quali Box"
+  short_description: "先确认数据与方法，再交付可追溯定性分析"
+  default_prompt: "Use $planners-quali-box to inspect my qualitative data, explain the recommended method and expected findings, wait for my confirmation, then deliver a traceable Markdown report plus a concise, navigable HTML report."

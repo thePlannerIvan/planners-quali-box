@@ -1,0 +1,29 @@
+# Internal and client materials
+_internal/
+work/
+output/
+outputs/
+deliverable/
+dist/
+build/
+
+# Real social-media data and user identifiers: do not publish
+evals/datasets/
+
+# Secrets and local configuration
+.env
+.env.*
+*.pem
+*.key
+*.token
+
+# Caches and local runtime files
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+*.log
+*.tmp
+.DS_Store

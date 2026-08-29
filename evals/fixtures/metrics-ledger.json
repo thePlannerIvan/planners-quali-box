@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "metrics": [
+    {
+      "metric_id": "interaction-author",
+      "label": "作者回复",
+      "numerator": 2,
+      "denominator": 5,
+      "filter": "all unique interactions",
+      "generation": "count relation_type=author_reply",
+      "report_tokens": ["2/5"],
+      "partition_id": "interaction-type"
+    },
+    {
+      "metric_id": "interaction-member",
+      "label": "成员回复",
+      "numerator": 1,
+      "denominator": 5,
+      "filter": "all unique interactions",
+      "generation": "count relation_type=member_reply",
+      "report_tokens": ["1/5"],
+      "partition_id": "interaction-type"
+    },
+    {
+      "metric_id": "interaction-oneoff",
+      "label": "一次性互动",
+      "numerator": 2,
+      "denominator": 5,
+      "filter": "all unique interactions",
+      "generation": "count relation_type=one_off",
+      "report_tokens": ["2/5"],
+      "partition_id": "interaction-type"
+    }
+  ]
+}

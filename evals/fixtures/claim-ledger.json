@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "claims": [
+    {
+      "claim_id": "claim-01",
+      "claim": "轻量诉求与稳定顾虑同时存在，并受使用距离影响。",
+      "support_ids": ["consumer-comments:c-01", "consumer-comments:c-02"],
+      "counter_ids": ["consumer-comments:c-03"],
+      "confidence": "中",
+      "confidence_reason": "多个消费者原音方向一致，但尚未验证不同场景的覆盖比例。",
+      "boundary": "只能说明当前语料中的张力，不能代表总体占比。",
+      "status": "approved"
+    }
+  ]
+}

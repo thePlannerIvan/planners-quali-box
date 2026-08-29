@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.1",
+  "entries": [
+    { "source_id": "consumer-comments:c-01", "dataset_id": "consumer-comments", "locator": "c-01", "actor_identity": "甲", "identity_status": "unknown", "evidence_role": "consumer_spontaneous", "text": "想要更轻……不想牺牲稳定", "context": "产品体验" },
+    { "source_id": "consumer-comments:c-02", "dataset_id": "consumer-comments", "locator": "c-02", "actor_identity": "乙", "identity_status": "unknown", "evidence_role": "consumer_spontaneous", "text": "轻是轻长距离还是担心支撑", "context": "长距离场景" },
+    { "source_id": "consumer-comments:c-03", "dataset_id": "consumer-comments", "locator": "c-03", "actor_identity": "丙", "identity_status": "unknown", "evidence_role": "consumer_spontaneous", "text": "对我来说轻便比稳定更重要", "context": "短距离场景" }
+  ]
+}

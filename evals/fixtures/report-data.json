@@ -1,0 +1,16 @@
+{
+  "method": "brand-community",
+  "placeholders": {
+    "REPORT_TITLE": "示例品牌社群信号诊断", "METHOD_NAME": "品牌社群信号诊断", "REPORT_TYPE": "导出内容定性分析",
+    "REPORT_DECK": "这是用于验证统一 HTML 生成器的最小报告。", "DATA_SCOPE": "测试语料", "DATE_RANGE": "时间未知", "SAMPLE_SIZE": "3 条评论", "ANALYSIS_DATE": "2026-08-12",
+    "DECISION_HEADLINE": "当前只能确认早期信号", "DECISION_SUMMARY": "当前材料不足以证明结构化品牌社群已形成。",
+    "KEY_CONCLUSIONS": "<p>1. 作者回复 2/5。</p><p>2. 成员回复 1/5。</p><p>3. 一次性互动 2/5。</p>", "RECOMMENDATIONS": "<p>先补充带回复链和时间的互动记录。</p>",
+    "OVERALL_CONFIDENCE": "整体置信度：低", "DECISION_BOUNDARY": "边界：不代表市场总体。", "DATA_SOURCE_TABLE": "<table><tr><th>来源</th><th>记录</th></tr><tr><td>corpus-sample.csv</td><td>3</td></tr></table>",
+    "SAMPLE_LEDGER": "<p>3 条逻辑记录，无排除。</p>", "FIELD_AND_ROLE_LEDGER": "<p>评论原文用于消费者表达诊断。</p>",
+    "COMMUNITY_HEADLINE": "尚未看到稳定成员网络", "MEMBER_GROUP_A": "边缘发言者", "MEMBER_RELATIONS_A": "平铺表达。", "BRAND_NODE": "品牌", "MEMBER_GROUP_B": "候选成员", "MEMBER_RELATIONS_B": "缺少持续互动。",
+    "COMMUNITY_MARKER_CARDS": "<article class=\"marker\"><h3>共同意识</h3><p>证据不足。</p></article><article class=\"marker\"><h3>仪式传统</h3><p>证据不足。</p></article><article class=\"marker\"><h3>道德责任</h3><p>证据不足。</p></article>",
+    "COMMUNITY_LEVEL_AND_BOUNDARY": "早期信号，不写社群已形成。", "BOUNDARIES_AND_ROLES": "<p>成员身份未经验证。</p>",
+    "FINDING_CARDS": "<article class=\"finding\"><h3>当前证据只支持阶段性判断</h3><p class=\"reasoning\">需要成员—成员回复链。</p><ul class=\"evidence\"><li><code>consumer-comments:c-01</code> 原音示例</li></ul><div class=\"counter\">反证：无持续关系。</div></article>",
+    "DATA_AND_SAMPLING": "<p>最小测试数据。</p>", "METHOD_AND_PARAMETERS": "<p>品牌社群三标志。</p>", "SOURCE_INDEX": "<li>consumer-comments:c-01</li>", "LIMITATIONS": "<p>样本小，只用于工程验证。</p>"
+  }
+}

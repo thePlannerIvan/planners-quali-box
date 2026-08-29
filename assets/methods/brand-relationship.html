@@ -1,0 +1,8 @@
+<style>
+  :root{--accent:#7b394d;--paper:#f3e9e8;--panel:#fff}.relation-line{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.relation-event{position:relative;padding:20px 16px;border-top:4px solid #7b394d;background:#fff}.relation-event:before{content:"";position:absolute;top:-9px;left:18px;width:14px;height:14px;border-radius:50%;background:#7b394d}.brq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px}.brq-card{padding:22px;border:1px solid #ba9aa3;background:#fff}.brq-card[data-evidence="missing"]{border-style:dashed;opacity:.7}.brq-card h3{margin-top:5px}.relationship-warning{padding:18px;border-left:6px solid #7b394d;background:#ead4d7}@media(max-width:760px){.relation-line,.brq-grid{grid-template-columns:1fr}}
+</style>
+<section class="section" id="relationship-timeline" data-nav-title="关系事件线"><p class="eyebrow">RELATIONSHIP HISTORY</p><h2>{{RELATIONSHIP_HEADLINE}}</h2><div class="relation-line">{{RELATIONSHIP_EVENTS}}</div></section>
+<section class="section" id="brq-profile" data-nav-title="关系证据剖面"><p class="eyebrow">SIX DIMENSIONS · NO COMPOSITE SCORE</p><h2>六个构面的支持、反证与缺失</h2><div class="brq-grid">{{BRQ_DIMENSION_CARDS}}</div></section>
+<section class="section" id="relationship-fracture" data-nav-title="维持与破裂"><p class="eyebrow">MAINTENANCE / FRACTURE</p><h2>关系靠什么维持，又在哪里失效</h2><div class="relationship-warning">{{MAINTENANCE_AND_FRACTURE}}</div></section>
+<section class="section" id="relationship-evidence" data-nav-title="证据与边界"><p class="eyebrow">FINDINGS UNDER REVIEW</p><h2>关系证据、反证与边界</h2>{{FINDING_CARDS}}</section>
+
