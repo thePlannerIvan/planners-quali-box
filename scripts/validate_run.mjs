@@ -72,18 +72,65 @@ for (const [label, filePath] of [['report.md', reportMdPath], ['report.html', re
   else if (hasPlaceholders(fs.readFileSync(filePath, 'utf8'))) failures.push(`${label} contains unresolved placeholders`);
 }
 
+const stripThousands = s => String(s).replace(/[,，]/g, '');
+
+/**
+ * 数字类 token 必须整体匹配：token `2.6%` 不能靠 `12.6%` 里那几个字符过关。
+ * 千分位先归一（`1,302` 与 `1302` 视为同一个数），再用前后边界断言排除
+ * "更长的数字里包含它"的情况。非数字开头的 token 仍用普通包含判断。
+ */
+function containsMetricToken(text, token) {
+  if (!/^\d/.test(token)) return text.includes(token);
+  const haystack = stripThousands(text);
+  const needle = stripThousands(token).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return new RegExp(`(?<![\\d.])${needle}(?![\\d.])`).test(haystack);
+}
+
 if (metrics.length && fs.existsSync(reportMdPath) && fs.existsSync(reportHtmlPath)) {
   const markdown = fs.readFileSync(reportMdPath, 'utf8');
   const html = fs.readFileSync(reportHtmlPath, 'utf8');
   for (const metric of metrics) for (const token of metric.report_tokens ?? []) {
-    if (!markdown.includes(token)) failures.push(`report.md missing metric token ${metric.metric_id}: ${token}`);
-    if (!html.includes(token)) failures.push(`report.html missing metric token ${metric.metric_id}: ${token}`);
+    if (!containsMetricToken(markdown, token)) failures.push(`report.md missing metric token ${metric.metric_id}: ${token}`);
+    if (!containsMetricToken(html, token)) failures.push(`report.html missing metric token ${metric.metric_id}: ${token}`);
+  }
+}
+
+// 反向检查：报告里出现了、账本里没登记的数字。
+// 这一向才是错数字的藏身处（例如把原音里的赞数写进正文却没进账本）。
+// 只报警不报错——报告里的日期、年份、序号、原音引用都天然不在账本里。
+if (metrics.length && fs.existsSync(reportMdPath)) {
+  const registered = new Set();
+  for (const metric of metrics) {
+    const fields = [metric.numerator, metric.denominator, metric.label, metric.filter, metric.generation, ...(metric.report_tokens ?? [])];
+    for (const field of fields) for (const n of String(field ?? '').match(/\d+(?:\.\d+)?%?/g) ?? []) registered.add(stripThousands(n));
+  }
+  const scrubbed = fs.readFileSync(reportMdPath, 'utf8')
+    .replace(/[0-9a-f]{12,}/g, ' ')       // 原始 note_id / comment_id
+    .replace(/`[^`]*`/g, ' ')             // 行内代码（脚本名、字段名）
+    .replace(/\d{4}-\d{2}-\d{2}/g, ' ')   // 完整日期
+    .replace(/\d{4}年/g, ' ');
+  const unregistered = new Map();
+  for (const raw of scrubbed.match(/(?<![\d.,])\d[\d,]*(?:\.\d+)?%?(?![\d.])/g) ?? []) {
+    const n = stripThousands(raw);
+    if (registered.has(n)) continue;
+    if (n.replace(/[^\d]/g, '').length <= 2) continue;   // 序号与小计数
+    if (/^(?:19|20)\d{2}$/.test(n)) continue;            // 年份
+    unregistered.set(n, (unregistered.get(n) ?? 0) + 1);
+  }
+  if (unregistered.size) {
+    const top = [...unregistered.entries()].sort((a, b) => b[1] - a[1]).slice(0, 20);
+    warnings.push(
+      `report.md 里有 ${unregistered.size} 个数字未在 metrics-ledger 登记（列出前 ${top.length} 个）：` +
+      top.map(([n, c]) => `${n}×${c}`).join('、')
+    );
   }
 }
 
 if (fs.existsSync(reportHtmlPath)) {
   const html = fs.readFileSync(reportHtmlPath, 'utf8');
-  for (const required of ['id="answer"', 'id="data"', '阿祖不看 TVC', '@media print', 'nav-toggle']) {
+  // 水印是身份装饰，不是不变量：这里不校验它。校验器断言一个常量，
+  // 只会让写错的常量被反复盖章（quanti 侧就曾把水印写错并自洽通过）。
+  for (const required of ['id="answer"', 'id="data"', '@media print', 'nav-toggle']) {
     if (!html.includes(required)) failures.push(`report.html missing required marker ${required}`);
   }
   if (/<(?:script|link)[^>]+(?:src|href)=["']https?:\/\//i.test(html)) failures.push('report.html contains an external script or stylesheet dependency');
