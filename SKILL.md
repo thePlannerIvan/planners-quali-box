@@ -93,7 +93,7 @@ Stage 0 的最低限度体检完成后，必须先向用户提交一份简洁的
 依次完整读取并执行：
 
 1. `stages/00-route-and-corpus.md`：确定研究问题、方法与语料边界，提交分析方案并等待用户确认，建立 `corpus-profile.md`。
-2. 只有 Stage 0 状态为 `approved` 后，才执行 `stages/01-research-design.md`：定义证据角色、分析单位与抽样；对 CSV/TSV/JSON 优先运行 `scripts/prepare_corpus.mjs`，一次生成 `normalized-corpus.jsonl`、稳定 `source_id` 和 `coverage-manifest.json`。
+2. 只有 Stage 0 状态为 `approved` 后，才执行 `stages/01-research-design.md`：定义证据角色、分析单位与抽样；对 CSV/TSV/JSON 优先运行 `scripts/prepare_corpus.mjs`，一次生成 `normalized-corpus.jsonl`、稳定 `source_id` 和 `source-index.json`（契约在公共件 `planners-source-index`）。
 3. `stages/02-calibration.md`：语义编码、分类或大语料任务先用异质小样本校准；纯文本细读可说明理由后跳过。
 4. 加载且只加载所选主方法 Reference、已确认的辅助镜头；线上场域另加载研究规范，再执行 `stages/03-full-analysis.md`。
 5. `stages/04-claim-audit.md`：把候选解释整理为 `evidence-index.json` 与 `claim-ledger.json`；所有报告数字进入 `metrics-ledger.json`。
@@ -153,7 +153,7 @@ Stage 0 的最低限度体检完成后，必须先向用户提交一份简洁的
 
 **读者面前不出现机器的账目。** 正文引用一律用短 handle（`A9`、`N16`）或一句可读描述（"Adidas 官方号·李现开球嘉宾笔记下的最高赞评论"）；`comment_id` / `note_id` 这类原始定位符、`work/*.py` 脚本名、`*.jsonl` / `*.csv` 文件名**只出现在附录**，并且在 HTML 里默认折叠，不铺在阅读流里。溯源能力不受影响——附录仍然能回源到每一行，只是不再把回源路径印在正文上。判断标准：把正文单独截出来给客户看，里面不该有任何他无法理解的字符串。
 
-1. 先用 `assets/report-shell.html` 取得共享页眉、证据卡、置信度、反证、来源抽屉和打印样式。
+1. 先用本 Skill 自己的 `assets/report-shell.html` 取得页眉、证据卡、置信度、反证、来源抽屉和打印样式（**装配管线是公共的，骨架是本 Skill 的** —— 八种方法的视觉隐喻不可互换）。
 2. 再加载对应的 `assets/methods/*.html`，采用主方法自己的信息结构和视觉隐喻；辅助镜头进入正文证据区，不另起一套总报告。
 3. 替换所有 `{{PLACEHOLDER}}`；不允许把占位文本交给用户。
 4. 保留可隐藏导航；导航打开/收起均不遮挡正文，移动端默认收起。
@@ -206,8 +206,9 @@ Stage 0 的最低限度体检完成后，必须先向用户提交一份简洁的
 | `references/00-skill-system-map.md` | 三层职责、权威、Pipeline 与验证架构 |
 | `stages/` | 当次项目从语料到报告的七阶段 Pipeline |
 | `scripts/prepare_corpus.mjs` | 对 CSV/TSV/JSON 一次生成规范化语料、稳定 ID 和覆盖账本 |
-| `scripts/render_report.mjs` | 用共享 shell 和主方法模块稳定组装单文件 HTML |
+| `scripts/render_report.mjs` | **薄壳**：把本 Skill 的骨架与主方法模块交给公共件 `planners-report-kit` 装配（落点、水印、未解析不写盘都在那边） |
 | `scripts/validate_run.mjs` | 唯一正式完成校验：证据、主张、数字与报告契约 |
 | `scripts/review_report.mjs` | 单次浏览器会话生成桌面/移动截图、打印 PDF 与 DOM 审计 |
 | `scripts/validate_evidence.mjs` | 旧命令兼容入口，与 `validate_run.mjs` 共用同一验证核心 |
+| `scripts/test_no_review_surface.mjs` | 防回退回归：扫整棵 Skill 树，出现任何公共审阅缝的标志物（桥注入点 / `review-surface.json` / 反馈文件 / 自起服务器）即红。它钉住的裁定是：**本 Skill 的人的决定（CP0 方案确认）留在对话里，不上缝** —— 那类决定要的是"模型在旁边多轮协商"，而缝的表达力是"一页 → 写一份文件 → 醒一次"；挂上去还会让 `corpus-profile.md` 的 `confirmation_status` 多出一份副本 |
 | `evals/` | 外部模型测试数据、Prompt 与评分表 |

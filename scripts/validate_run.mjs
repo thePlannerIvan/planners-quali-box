@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { moduleScript } from './lib/planners-modules.mjs';
 import { readJson, validateEvidenceAndClaims, validateEvidenceAgainstCorpus, validateMetrics, hasPlaceholders } from './validation-core.mjs';
 
 const runDir = process.argv[2];
@@ -29,6 +31,10 @@ const corpusPath = firstExisting([
   path.join(runDir, 'normalized-corpus.jsonl'),
   path.join(runDir, 'work', '01_design', 'normalized-corpus.jsonl')
 ]);
+const sourceIndexPath = firstExisting([
+  path.join(runDir, 'source-index.json'),
+  path.join(runDir, 'work', '01_design', 'source-index.json')
+]);
 const reportMdPath = path.join(runDir, 'report.md');
 const reportHtmlPath = path.join(runDir, 'report.html');
 const failures = [];
@@ -37,6 +43,22 @@ const warnings = [];
 if (!evidencePath) failures.push('missing evidence-index.json');
 if (!claimsPath) failures.push('missing claim-ledger.json');
 if (!corpusPath) failures.push('missing normalized-corpus.jsonl');
+if (!sourceIndexPath) failures.push('missing source-index.json');
+
+if (sourceIndexPath) {
+  // 来源索引的契约与校验器都在公共件 planners-source-index —— 这里只负责**把它打开**。
+  // 过去 coverage-manifest.json 生成了却从没人读：没有人校验的账目，等于没有账目。
+  try {
+    const cli = moduleScript('planners-source-index', 'scripts/validate-source-index.mjs');
+    const result = spawnSync(process.execPath, [cli, sourceIndexPath], { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+    let parsed = null;
+    try { parsed = JSON.parse(result.stdout); } catch { /* 下面统一报 */ }
+    if (!parsed) failures.push(`source-index 校验器没有返回 JSON：${(result.stderr || '').slice(0, 200)}`);
+    else if (!parsed.valid) for (const error of parsed.errors) failures.push(`source-index: [${error.code}] ${error.message}`);
+  } catch (error) {
+    failures.push(`source-index 校验无法运行：${error.message}`);
+  }
+}
 let evidenceCount = 0;
 let claimCount = 0;
 if (evidencePath && claimsPath) {
@@ -130,10 +152,19 @@ if (fs.existsSync(reportHtmlPath)) {
   const html = fs.readFileSync(reportHtmlPath, 'utf8');
   // 水印是身份装饰，不是不变量：这里不校验它。校验器断言一个常量，
   // 只会让写错的常量被反复盖章（quanti 侧就曾把水印写错并自洽通过）。
-  for (const required of ['id="answer"', 'id="data"', '@media print', 'nav-toggle']) {
-    if (!html.includes(required)) failures.push(`report.html missing required marker ${required}`);
+  // 离线契约（外部依赖 / 水印 / 打印样式 / 必需标记）归公共件 planners-report-kit —— 只该有一处定义。
+  // 这里只声明**本报告特有**的必需标记。
+  try {
+    const reportValidator = moduleScript('planners-report-kit', 'scripts/validate-report.mjs');
+    const result = spawnSync(process.execPath, [reportValidator, reportHtmlPath,
+      '--require', 'id="answer"', '--require', 'id="data"', '--require', 'nav-toggle'], { encoding: 'utf8' });
+    let parsed = null;
+    try { parsed = JSON.parse(result.stdout); } catch { /* 下面统一报 */ }
+    if (!parsed) failures.push(`report.html 离线校验没有返回 JSON：${(result.stderr || '').slice(0, 200)}`);
+    else if (!parsed.valid) for (const error of parsed.errors) failures.push(`report.html: [${error.code}] ${error.message}`);
+  } catch (error) {
+    failures.push(`report.html 离线校验无法运行：${error.message}`);
   }
-  if (/<(?:script|link)[^>]+(?:src|href)=["']https?:\/\//i.test(html)) failures.push('report.html contains an external script or stylesheet dependency');
 }
 
 for (const warning of warnings) console.warn(`WARN ${warning}`);

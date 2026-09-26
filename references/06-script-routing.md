@@ -4,12 +4,12 @@
 
 | 脚本 | 默认用于 | 不应用于 |
 |---|---|---|
-| `prepare_corpus.mjs` | CSV/TSV/JSON 在 CP0 确认后一次性规范化，生成稳定 `source_id`、`normalized-corpus.jsonl` 和 `coverage-manifest.json` | 不替代 Excel 原生读取、语义编码或方法路由 |
+| `prepare_corpus.mjs` | CSV/TSV/JSON 在 CP0 确认后一次性规范化，生成稳定 `source_id`、`normalized-corpus.jsonl` 和 `source-index.json`（`source-index/2.0.0`，契约与校验在公共件 `planners-source-index`） | 不替代 Excel 原生读取、语义编码或方法路由 |
 | `phase1_analyze.py` | Ogilvy 的大样本语义主题发现、MMR 采样和情绪补漏；依赖见 `scripts/requirements-ogilvy.txt` | GWTB 策略句、NeedScope 坐标的直接判定 |
 | `deepen.py` | Ogilvy 主题的原文回查；支持 `--text-col`，输出稳定行 ID | 用命中次数代替 L2/L3 |
 | `extract_wordfreq.py` | GWTB 按品牌/证据角色做轻量词频入口 | 用高频词直接填 GET/WHO/TO/BY |
 | `preprocess_comments.py` | Levi-Strauss 的阅读导航、情绪线索与候选结构材料 | 用聚类直接生成二元对立或趋势；缺 sklearn 时只输出通用未聚类导航，不执行领域词硬编码 |
-| `render_report.mjs` | 把已审阅的 `report-data.json` 与共享 shell/方法模块组成单文件 HTML | 不从原始语料发明结论，不为每个项目重写生成器 |
+| `render_report.mjs` | 把已审阅的 `report-data.json` 与**本 Skill 的** shell / 方法模块交给公共件 `planners-report-kit` 装配成单文件 HTML | 不自己实现装配与离线判据；不从原始语料发明结论；不为每个项目重写生成器 |
 | `validate_run.mjs` | 最终一次检查证据与主张 schema、规范化语料回源、数字账本、报告存在性与 HTML 机械契约 | 不判断洞察深度，不调用视觉模型，不重跑分析 |
 | `review_report.mjs` | Validator 通过后，用一次浏览器会话生成桌面、移动端、打印与 DOM 审计产物 | 不替代语义审阅；没有明确异常时不重复截图 |
 

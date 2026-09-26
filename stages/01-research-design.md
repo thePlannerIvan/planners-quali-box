@@ -12,7 +12,7 @@
 
 1. 定义主问题、辅问题、核心概念、排除范围和预期决策。
 2. 规定抽样与分层：品牌、角色、时间、互动层级、主题边界或少数信号。
-3. 对 CSV/TSV/JSON 优先为当次数据写一份最小 `corpus-config.json`，运行 `node scripts/prepare_corpus.mjs corpus-config.json WORK_DIR`，一次生成 `normalized-corpus.jsonl` 与 `coverage-manifest.json`。JSON 必须优先提供稳定 `locator_fields`；只有原数据确实没有逻辑 ID 且会保存完整原始副本时，才显式设置 `allow_positional_locator: true`。后续抽样、检索、证据登记只使用已生成的 `source_id`，不得手写 ID 或凭记忆重建原文。Excel 先用当前工作区规定的原生表格读取器导出工作副本，原文件保持不变。
+3. 对 CSV/TSV/JSON 优先为当次数据写一份最小 `corpus-config.json`，运行 `node scripts/prepare_corpus.mjs corpus-config.json WORK_DIR`，一次生成 `normalized-corpus.jsonl` 与 **`source-index.json`**（契约 `source-index/2.0.0`，在公共件 `planners-source-index` 里；本 Skill 不定义字段）。JSON 必须优先提供稳定 `locator_fields`；只有原数据确实没有逻辑 ID 且会保存完整原始副本时，才显式设置 `allow_positional_locator: true`。后续抽样、检索、证据登记只使用已生成的 `source_id`，不得手写 ID 或凭记忆重建原文。Excel 先用当前工作区规定的原生表格读取器导出工作副本，原文件保持不变。
 4. `source_id` 必须解析到 `dataset_id + 原始逻辑定位器`，例如格式解析后的记录号、工作表+行、note_id/comment_id、文档段落锚点；不得用物理文本行或排序后的临时序号替代逻辑定位器。
 5. 为可引用材料分别记录 `actor_identity`、`identity_status: verified/inferred/unknown` 与面向当前主张的 `evidence_role`。身份推断不能自动升级证据权威。
 6. 规定证据独立性：同一笔记下的重复评论、转载、模板话术和同一传播链不能伪装成多个独立来源。
@@ -28,7 +28,9 @@
 ## Gate
 
 - 任一 `source_id` 都能回到原始语境。
-- `coverage-manifest.json` 记录了每个输入的逻辑记录数与空文本，“全量处理”有可复核覆盖，不只是日志自述。
+- `source-index.json` 记录每个输入的原文件 **sha256**、逻辑记录数、空文本与**覆盖状态**；契约与校验规则都在公共件里，而 `validate_run.mjs` 会**真的打开它** —— 「全量处理」有可复核覆盖，不只是日志自述。
+- **不是 `full` 的来源，必须在 `blind_spots` 里各有一条**（缺哪一段、为什么、会让哪些判断不成立）。校验器强制这条；下游（事实核查）据此知道哪些结论核不了，而不是把全量当成读过了。
+- 读不到的格式（PDF / 扫描件 / 旧版 Office）**先去找、去装抽取工具**（`pip install pypdf`、`brew install poppler`…），装了什么写进 `audit_layer.method`；只有真试过仍不行才登记盲区并注明试过什么。
 - 证据身份、身份置信和证据用途没有混成一个标签。
 - 证据角色、分析单位、方法条件与研究问题一致。
 - 抽样不会只保留高互动、强情绪或支持预设的材料。

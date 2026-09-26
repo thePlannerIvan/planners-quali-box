@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="author" content="阿祖不看 TVC · demyth.info">
+  <meta name="author" content="{{WATERMARK}}">
   <title>{{REPORT_TITLE}}</title>
   <style>
     :root{--paper:#f4f1e9;--ink:#171816;--muted:#696c66;--line:#c9c7be;--panel:#fffdf8;--accent:#304c65;--high:#286846;--mid:#9a6819;--low:#9b3e35;--radius:18px;--nav:286px}
@@ -16,8 +16,8 @@
 </head>
 <body class="nav-open">
   <button class="nav-toggle" id="navToggle" type="button" aria-controls="reportNav" aria-expanded="true" aria-label="隐藏目录"><span></span></button>
-  <aside class="report-nav" id="reportNav" aria-label="报告导航"><div class="nav-brand"><b>{{METHOD_NAME}}</b><small>阿祖不看 TVC · demyth.info</small></div><ol id="navList"></ol></aside><div class="nav-backdrop" id="navBackdrop"></div>
-  <div class="watermark" aria-label="作者水印">阿祖不看 TVC · demyth.info</div>
+  <aside class="report-nav" id="reportNav" aria-label="报告导航"><div class="nav-brand"><b>{{METHOD_NAME}}</b><small>{{WATERMARK}}</small></div><ol id="navList"></ol></aside><div class="nav-backdrop" id="navBackdrop"></div>
+  <div class="watermark" aria-label="作者水印">{{WATERMARK}}</div>
   <header class="report-head">
     <p class="kicker">{{METHOD_NAME}} · {{REPORT_TYPE}}</p>
     <h1>{{REPORT_TITLE}}</h1>
@@ -35,7 +35,7 @@
       <div class="table-wrap">{{DATA_SOURCE_TABLE}}</div>
       <div class="data-grid"><article class="data-card"><h3>样本账目与处理</h3>{{SAMPLE_LEDGER}}</article><article class="data-card"><h3>字段、证据角色与缺口</h3>{{FIELD_AND_ROLE_LEDGER}}</article></div>
     </section>
-    <!-- METHOD_MODULE -->
+    {{REPORT_CONTENT}}
     <section class="section" id="sources" data-nav-title="来源与限制">
       <p class="eyebrow">AUDIT TRAIL</p><h2>来源、方法与限制</h2>
       <details open><summary>原始数据与抽样</summary>{{DATA_AND_SAMPLING}}</details>
@@ -44,7 +44,7 @@
       <details><summary>局限与下一步</summary>{{LIMITATIONS}}</details>
     </section>
   </main>
-  <footer class="report-foot"><b>阿祖不看 TVC · demyth.info</b><br>{{REPORT_TITLE}} · Evidence-led qualitative review · {{ANALYSIS_DATE}}</footer>
+  <footer class="report-foot"><b>{{WATERMARK}}</b><br>{{REPORT_TITLE}} · Evidence-led qualitative review · {{ANALYSIS_DATE}}</footer>
   <script>
     (()=>{const body=document.body,toggle=document.getElementById('navToggle'),nav=document.getElementById('reportNav'),list=document.getElementById('navList'),backdrop=document.getElementById('navBackdrop');let stored=null;try{stored=localStorage.getItem('quali-nav')}catch(e){}if(stored==='closed'||(!stored&&matchMedia('(max-width:860px)').matches))body.classList.remove('nav-open');const sync=()=>{const open=body.classList.contains('nav-open');toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'隐藏目录':'显示目录')};const setOpen=open=>{body.classList.toggle('nav-open',open);try{localStorage.setItem('quali-nav',open?'open':'closed')}catch(e){}sync()};toggle.addEventListener('click',()=>setOpen(!body.classList.contains('nav-open')));backdrop.addEventListener('click',()=>setOpen(false));document.querySelectorAll('main .section[id]').forEach((section,i)=>{const title=section.dataset.navTitle||section.querySelector('h2')?.textContent?.trim();if(!title)return;const li=document.createElement('li'),a=document.createElement('a');a.href='#'+section.id;a.textContent=String(i+1).padStart(2,'0')+'  '+title;a.addEventListener('click',()=>{if(matchMedia('(max-width:860px)').matches)setOpen(false)});li.appendChild(a);list.appendChild(li)});sync();if('IntersectionObserver'in window){const links=[...list.querySelectorAll('a')],observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(a=>a.classList.toggle('is-active',a.getAttribute('href')==='#'+entry.target.id))}})},{rootMargin:'-20% 0px -70%'});document.querySelectorAll('main .section[id]').forEach(section=>observer.observe(section))}})();
   </script>

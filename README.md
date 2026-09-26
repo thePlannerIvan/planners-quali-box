@@ -55,6 +55,19 @@ node scripts/test_evidence_pipeline.mjs
 
 仓库不包含真实社媒抓取样本或带用户标识的评估数据。请使用自己的已授权材料，或自行准备脱敏数据来运行完整评估。
 
+## 目录结构
+
+```text
+planners-quali-box/
+├── SKILL.md
+├── agents/openai.yaml
+├── assets/              # 报告骨架、样式指南与八种方法的视觉隐喻页
+├── evals/               # 合成数据集、夹具、方法测试提示与评分标准
+├── references/          # 方法定义、方法路由、辅助镜头、方法来源
+├── scripts/             # 语料准备、分析、证据校验、报告装配与渲染
+└── stages/              # 00–06 分阶段工作流
+```
+
 ## 授权、署名与商业支持
 
 - 以 [AGPL-3.0-only](LICENSE) 发布；

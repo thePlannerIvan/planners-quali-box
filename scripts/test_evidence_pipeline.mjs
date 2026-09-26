@@ -40,6 +40,8 @@ try {
   fs.copyFileSync(fixture('claim-ledger.json'), path.join(runDir, 'claim-ledger.json'));
   fs.copyFileSync(fixture('metrics-ledger.json'), path.join(runDir, 'metrics-ledger.json'));
   fs.copyFileSync(path.join(preparedDir, 'normalized-corpus.jsonl'), path.join(runDir, 'normalized-corpus.jsonl'));
+  // 来源索引现在是必需产物：prepare_corpus 产出它，validate_run 会真的打开它
+  fs.copyFileSync(path.join(preparedDir, 'source-index.json'), path.join(runDir, 'source-index.json'));
   fs.writeFileSync(path.join(runDir, 'report.md'), '# Report\n\n作者回复 2/5；成员回复 1/5；一次性互动 2/5。\n');
   run('render_report.mjs', [fixture('report-data.json'), path.join(runDir, 'report.html')]);
   run('validate_run.mjs', [runDir]);
