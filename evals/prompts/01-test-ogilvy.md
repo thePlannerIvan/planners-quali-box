@@ -1,8 +1,8 @@
 # Case 01 — Ogilvy 社交情绪洞察
 
-使用 `planners-quali-box` 分析 `evals/datasets/Adidas_comments.csv`。
+使用 `planners-quali-box` 分析 `evals/datasets/brand_a_comments.csv`。
 
-这批数据来自 Adidas 世界杯相关小红书评论。请判断评论背后的情绪、动机、人性真相和文化张力，并说明哪些发现属于品牌、明星/赛事活动或平台语境。
+这批数据来自某运动品牌世界杯相关小红书评论。请判断评论背后的情绪、动机、人性真相和文化张力，并说明哪些发现属于品牌、明星/赛事活动或平台语境。
 
 输出到 `evals/runs/01-ogilvy/`：
 

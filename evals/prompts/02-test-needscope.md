@@ -1,6 +1,6 @@
 # Case 02 — NeedScope 品牌情感定位
 
-使用 `planners-quali-box` 分析 `evals/datasets/needscope_mizuno_comments.csv`，判断美津浓在消费者心智中的情感定位。
+使用 `planners-quali-box` 分析 `evals/datasets/needscope_brand_a_comments.csv`，判断某运动品牌在消费者心智中的情感定位。
 
 请区分品牌、产品/型号、活动、内容与社区信号，说明当前主位置、相邻位置、证据缺口和可能的定位机会。报告主图要能展示 NeedScope 空间中的相对位置，不要只给六项分数。
 

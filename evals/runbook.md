@@ -22,17 +22,17 @@ Judge 必须从原生格式独立复核逻辑记录数，不用物理行数替�
 
 ## 测试集
 
-| Case | 方法 | 数据 | 真实记录数 | 重点 |
-|---|---|---:|---:|---|
-| 00 | 路由 | `tim_comments.csv` | 372 | 是否先读数据，给出完整而简洁的 CP0 方案并等待确认 |
-| 01 | Ogilvy | `Adidas_comments.csv` | 7,125 | 既有聚类流程、重复与明星噪声 |
-| 02 | NeedScope | `needscope_mizuno_comments.csv` | 513 | 六空间定位、signal owner、报告主图 |
-| 03 | GWTB | 三份 `gwtb_*_notes.csv` | 600 | 官方属性判断、词频、三品牌对比 |
-| 04 | TBWA | `xhs_comments.csv` | 760 | 真习俗而非普通抱怨 |
-| 05 | Lévi-Strauss | `xhs_comments.csv` | 760 | 稳定对立、真实 checkpoint、趋势故事 |
-| 06 | 消费任务与价值链 | `jobs_open_ends.csv` | 12 | 区分 job/solution，现成文本不得冒充 Laddering/ODI |
-| 07 | 品牌关系 | `brand_relationship_histories.csv` | 12 | 关系事件与六构面证据缺失，不做总分 |
-| 08 | 品牌社群 | 两份 community CSV | 18 + 10 | 回复关系与平铺好评对照，防止社群误判 |
+| Case | 方法 | 数据 | 记录数量级 | 重点 |
+|---|---|---|---:|---|
+| 00 | 路由 | `social_comments_small.csv` | 约 4 百 | 是否先读数据，给出完整而简洁的 CP0 方案并等待确认 |
+| 01 | Ogilvy | `brand_a_comments.csv` | 约 7 千 | 既有聚类流程、重复与明星噪声 |
+| 02 | NeedScope | `needscope_brand_a_comments.csv` | 约 5 百 | 六空间定位、signal owner、报告主图 |
+| 03 | GWTB | 三份 `gwtb_*_notes.csv` | 约 6 百 | 官方属性判断、词频、三品牌对比 |
+| 04 | TBWA | `social_comments_large.csv` | 约 8 百 | 真习俗而非普通抱怨 |
+| 05 | Lévi-Strauss | `social_comments_large.csv` | 约 8 百 | 稳定对立、真实 checkpoint、趋势故事 |
+| 06 | 消费任务与价值链 | `jobs_open_ends.csv` | 约 10 | 区分 job/solution，现成文本不得冒充 Laddering/ODI |
+| 07 | 品牌关系 | `brand_relationship_histories.csv` | 约 10 | 关系事件与六构面证据缺失，不做总分 |
+| 08 | 品牌社群 | 两份 community CSV | 约 20 | 回复关系与平铺好评对照，防止社群误判 |
 
 记录数使用 `qsv count` 校验，不使用物理行数，因为 CSV 文本可能包含换行。
 
