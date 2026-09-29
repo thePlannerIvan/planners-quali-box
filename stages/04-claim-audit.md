@@ -34,3 +34,11 @@ node scripts/validate_run.mjs RUN_DIRECTORY
 ```
 
 Validator 只证明结构闭环、数字内部一致和报告机械契约，不证明语义正确。不得为当次项目另写替代校验器；如官方脚本失败，修正产物或回报 Skill 兼容性问题。语义审计失败的主张应降信、改写为假设或删除。
+
+## 完成标准
+
+- 三本账本齐备：`evidence-index.json`、`claim-ledger.json`、`metrics-ledger.json`；
+- 每条支持与反证都能通过 `source_id / dataset_id / locator` 回到 `normalized-corpus.jsonl` 的原文，证据节选仍可在原文中顺序定位；
+- 强推断词与比较级都已改到证据能支撑的强度，或降级为待验证假设；
+- 方法身份没有越界；
+- 本阶段只建立账本 —— 统一机械校验留给 Stage 5 的 `validate_run.mjs`，本阶段不另写校验器。

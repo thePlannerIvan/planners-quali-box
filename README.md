@@ -114,6 +114,8 @@ git clone https://github.com/thePlannerIvan/planners-quali-box.git ~/.claude/ski
 
 ```bash
 node scripts/test_evidence_pipeline.mjs
+node scripts/test_no_review_surface.mjs   # 钉住「CP0 留在对话里、不上公共缝」这条裁定
+node scripts/lib/planners-modules-install.test.mjs
 ```
 
 仓库不包含真实社媒抓取样本或带用户标识的评估数据。请使用自己的已授权材料，或自行准备脱敏数据来运行完整评估。

@@ -56,7 +56,12 @@ const ADVISORY = [
 //    豁免卡的是"**表格里登记这条回归自己**的那一行"（含脚本名 + 表格竖线），
 //    所以 SKILL.md 里任何**别的**接缝写法（包括正文段落里提一句）照样会红。
 const ALLOW = {
+  // 两张名单都是"有哪些公共件"的名单，都**不是**接缝的证据：
+  // ① 解析适配器里的名单；② 安装器 MODULE_SPECS 里 review-core 的锚点文件名。
   'scripts/lib/planners-modules.mjs': [/planners-review-core/],
+  // 安装器只豁免"裸的锚点文件名字面量"这一行（形如 'scripts/review-host.mjs',），
+  // 不豁免整个文件 —— 谁真的在安装器里接缝，照样会红。
+  'scripts/lib/planners-modules-install.mjs': [/^\s*'[^']*\/(review-surface|review-host)[^']*',?\s*$/],
   'SKILL.md': [/scripts\/test_no_review_surface\.mjs.*\|/],
 };
 const allowed = (rel, line) => (ALLOW[rel] || []).some(pattern => pattern.test(line));

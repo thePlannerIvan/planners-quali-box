@@ -112,7 +112,7 @@ export function moduleScript(name, relPath) {
 }
 
 if (process.argv.includes('--check')) {
-  for (const name of ['planners-source-index', 'planners-fact-check', 'planners-review-core']) {
+  for (const name of ['planners-source-index', 'planners-report-kit']) {
     try {
       const dir = resolveModule(name);
       console.log(`✓ ${name} → ${dir}`);

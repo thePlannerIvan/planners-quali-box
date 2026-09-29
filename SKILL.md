@@ -88,6 +88,12 @@ Stage 0 的最低限度体检完成后，必须先向用户提交一份简洁的
 
 把确认状态写入 `corpus-profile.md`：`awaiting_confirmation / approved / revision_requested`，并记录用户确认的研究问题、方法、范围和关键假设。不得代替用户写“已确认”。
 
+**这条门槛不做机器校验，是有意的**（与 `planners-quanti-box` 同一条裁定）：CP0 是人的决定，不是机器的状态。`corpus-profile.md` 里的 `confirmation_status` 是**给流程排序用的记录**，不是批准的证据 —— 机器能验的只有"某个字符串非空"，那既不能证明批准发生过，也会逼模型写一份看起来像证据的东西。所以：
+
+- **谁读它**：模型自己在进 Stage 1 前读（SKILL.md 的「执行阶段」第 2 条）；写稿与报告阶段读它判断本版算不算数；
+- **谁不读它**：`scripts/validate_run.mjs` 不读、也不该读（它管的是证据、主张、数字与报告契约）；
+- **不做**：不落哈希绑定、不生成第二份确认记录、不上公共审阅缝。
+
 ## 执行阶段
 
 依次完整读取并执行：
@@ -104,18 +110,9 @@ Stage 0 的最低限度体检完成后，必须先向用户提交一份简洁的
 
 共享的是原生格式读取、输入检查和证据追溯，不是聚类方法。记录的“条数”必须是格式解析后的逻辑记录数；物理行、分页或视觉换行不能直接当记录。只有原生解析失败、字段错位或结构不变量被破坏时才可称为损坏，并保留原始输入与转换说明。
 
-| 方法 | 默认的数据处理策略 |
-|---|---|
-| Ogilvy | 保留经验证的语义主题聚类、MMR 多样性采样与情绪信号补漏；脚本辅助发现，模型负责合并与深化 |
-| NeedScope | 对象相关性过滤、证据角色拆分、情感空间编码；词频只能辅助抽样，不能直接决定落点 |
-| GWTB | 按品牌与证据角色做轻量词频、短语与高互动原文检索；不用主题聚类强行生产策略句 |
-| TBWA | 优先找重复惯例、抱怨、反常和边缘用法；保留低频但高解释力信号，不默认套 Ogilvy 聚类 |
-| Levi-Strauss | 先做信号提取和候选二元对立，再经稳定性 Gate 进入结构转换；聚类只作阅读导航 |
-| 消费任务与价值链 | 先抽取情境、任务、期望结果与替代，再建立有原文连接的 A-C-V 链；无追问轨迹不生成完整 ladder/HVM |
-| 品牌关系 | 先建立关系事件线，再检查关系形态与 BRQ 六构面的支持、反证和缺失；不做关键词总分 |
-| 品牌社群 | 先恢复成员—成员、成员—品牌关系，再检查共同意识、仪式传统与道德责任；不把评论聚类当社群结构 |
+**八种方法的专属处理策略各自住在自己的 Reference 里**（`references/01-ogilvy.md` … `references/10-brand-community.md`），本页不复述：一个项目只跑一个主方法，所以只读那一个。共同结论只有一条 —— **聚类不是共享算法**，谁都不许用它替代方法专属的证据组织。
 
-脚本路线见 `references/06-script-routing.md`。运行文件必须写入当前任务的输出目录，不得写回 Skill 自身的 `work/`。
+脚本路线见 `references/06-script-routing.md`。运行文件必须写入当前任务的输出目录，**不得写回 Skill 安装目录**。
 
 ## 统一审阅契约
 
@@ -151,7 +148,7 @@ Stage 0 的最低限度体检完成后，必须先向用户提交一份简洁的
 3. **方法分析**：展示该方法专属主图、推理过程、证据与反证；
 4. **附录**：方法参数、来源索引、限制与下一步。
 
-**读者面前不出现机器的账目。** 正文引用一律用短 handle（`A9`、`N16`）或一句可读描述（"某品牌官方号·赛事嘉宾笔记下的最高赞评论"）；`comment_id` / `note_id` 这类原始定位符、`work/*.py` 脚本名、`*.jsonl` / `*.csv` 文件名**只出现在附录**，并且在 HTML 里默认折叠，不铺在阅读流里。溯源能力不受影响——附录仍然能回源到每一行，只是不再把回源路径印在正文上。判断标准：把正文单独截出来给客户看，里面不该有任何他无法理解的字符串。
+**读者面前不出现机器的账目。** 正文引用一律用短 handle（`A9`、`N16`）或一句可读描述（"某品牌官方号·赛事嘉宾笔记下的最高赞评论"）；`comment_id` / `note_id` 这类原始定位符、写稿脚本的文件名（如 `phase1_analyze.py`）、`*.jsonl` / `*.csv` 文件名**只出现在附录**，并且在 HTML 里默认折叠，不铺在阅读流里。溯源能力不受影响——附录仍然能回源到每一行，只是不再把回源路径印在正文上。判断标准：把正文单独截出来给客户看，里面不该有任何他无法理解的字符串。
 
 1. 先用本 Skill 自己的 `assets/report-shell.html` 取得页眉、证据卡、置信度、反证、来源抽屉和打印样式（**装配管线是公共的，骨架是本 Skill 的** —— 八种方法的视觉隐喻不可互换）。
 2. 再加载对应的 `assets/methods/*.html`，采用主方法自己的信息结构和视觉隐喻；辅助镜头进入正文证据区，不另起一套总报告。
@@ -185,6 +182,8 @@ Stage 0 的最低限度体检完成后，必须先向用户提交一份简洁的
 
 ## 文件索引
 
+索引只列**会被改路径的主要模块**；脚本的完整适用边界与调用方式在 `references/06-script-routing.md`。
+
 | 路径 | 用途 |
 |---|---|
 | `references/01-ogilvy.md` | 情绪洞察与 Brand Big IdeaL |
@@ -192,10 +191,11 @@ Stage 0 的最低限度体检完成后，必须先向用户提交一份简洁的
 | `references/03-gwtb.md` | 单一 GWTB 与官方笔记判定 |
 | `references/04-tbwa.md` | 惯例、疲劳、愿景与颠覆机会 |
 | `references/05-levistrauss.md` | 二元对立、转换与趋势预判 |
+| `assets/report-shell.html` | 本 Skill 的报告骨架（页眉/证据卡/置信度/反证/来源抽屉/打印样式）——**装配管线公共，骨架自有** |
 | `assets/report-style-guide.md` | 共享审阅组件与 HTML 验收规则 |
 | `assets/report-template.md` | 结论优先的 Markdown 报告模板与数据来源表 |
 | `assets/methods/` | 八种主方法专属 HTML 模块 |
-| `references/06-script-routing.md` | 脚本适用边界和调用说明 |
+| `references/06-script-routing.md` | 脚本适用边界和调用说明（脚本全清单在此） |
 | `references/07-needscope-sources.md` | NeedScope 官方资料核对与报告设计依据 |
 | `references/08-jobs-value-chain.md` | JTBD、MEC 与 Laddering 的身份、证据条件和禁区 |
 | `references/09-brand-relationship.md` | Fournier 品牌关系与 BRQ 诊断 |
@@ -208,7 +208,11 @@ Stage 0 的最低限度体检完成后，必须先向用户提交一份简洁的
 | `scripts/prepare_corpus.mjs` | 对 CSV/TSV/JSON 一次生成规范化语料、稳定 ID 和覆盖账本 |
 | `scripts/render_report.mjs` | **薄壳**：把本 Skill 的骨架与主方法模块交给公共件 `planners-report-kit` 装配（落点、水印、未解析不写盘都在那边） |
 | `scripts/validate_run.mjs` | 唯一正式完成校验：证据、主张、数字与报告契约 |
-| `scripts/review_report.mjs` | 单次浏览器会话生成桌面/移动截图、打印 PDF 与 DOM 审计 |
+| `scripts/validation-core.mjs` | 上面那个校验器的核心（证据/主张/数字），被 `validate_run.mjs` 与兼容入口共用 |
+| `scripts/review_report.mjs` | 单次浏览器会话生成桌面/移动截图、打印 PDF 与 DOM 审计。与 `planners-quanti-box` 的 `scripts/visual_smoke.mjs` 是**同一类检查**（一次浏览器会话的机械视觉检查），不是人工审阅面 |
+| `scripts/preprocess_comments.py`、`scripts/extract_wordfreq.py`、`scripts/phase1_analyze.py`、`scripts/deepen.py` | Ogilvy 路线的预处理、词频、一期分析与深化（适用边界见 `references/06-script-routing.md`） |
 | `scripts/validate_evidence.mjs` | 旧命令兼容入口，与 `validate_run.mjs` 共用同一验证核心 |
 | `scripts/test_no_review_surface.mjs` | 防回退回归：扫整棵 Skill 树，出现任何公共审阅缝的标志物（桥注入点 / `review-surface.json` / 反馈文件 / 自起服务器）即红。它钉住的裁定是：**本 Skill 的人的决定（CP0 方案确认）留在对话里，不上缝** —— 那类决定要的是"模型在旁边多轮协商"，而缝的表达力是"一页 → 写一份文件 → 醒一次"；挂上去还会让 `corpus-profile.md` 的 `confirmation_status` 多出一份副本 |
+| `scripts/test_evidence_pipeline.mjs` | 证据管线回归 |
+| `scripts/lib/planners-modules*.mjs` | 公共模组的解析适配器与安装器（允许重复的 seam） |
 | `evals/` | 外部模型测试数据、Prompt 与评分表 |
